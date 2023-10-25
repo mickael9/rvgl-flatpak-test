@@ -74,7 +74,7 @@ modules:
         commit: a45b8830cafda25e76d7120b0462daa82c382a7a
         x-checker-data:
           type: git
-          tag-pattern: "^v([\\d.]+)$"
+          tag-pattern: ^v([\d.]+)$
 
   - python3-modules.json
 
@@ -97,11 +97,11 @@ modules:
 
       - type: git
         url: https://gitlab.com/re-volt/rvgl-launcher.git
-        tag: 0.1.23.510a0
-        commit: 0000000000000000000000000000000000000000
+        tag: 0.1.23.510a1
+        commit: 80c033b239641c655b2963f9605b59468ef992e3
         x-checker-data:
           type: git
-          tag-pattern: '^(\d+(?:\.\d+)+(?:a\d+)?)$'
+          tag-pattern: ^(\d+(?:\.\d+)+(?:a\d+)?)$
 
       - type: file
         path: rvgl_launcher
