@@ -23,7 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
+    - uses: actions/checkout@v3
     - uses: actions/download-artifact@v3
+      with:
+        name: rvgl-x86_64
 
     - uses: xresloader/upload-to-github-release@v1
       env:
