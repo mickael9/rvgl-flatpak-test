@@ -97,11 +97,12 @@ modules:
 
       - type: git
         url: https://gitlab.com/re-volt/rvgl-launcher.git
-        tag: 0.1.23.510a1
-        commit: 80c033b239641c655b2963f9605b59468ef992e3
+        tag: 0.1.21.630a1
+        commit: 802efbe210056a6753ecf1141bd67bfa94ea542e
         x-checker-data:
           type: git
           tag-pattern: '^(\d+(?:\.\d+)+(?:a\d+)?)$'
+          is-important: true
 
       - type: file
         path: rvgl_launcher
