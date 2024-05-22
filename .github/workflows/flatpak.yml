@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [main]
+    branches: [repo]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -10,34 +10,28 @@ jobs:
     name: "Flatpak"
     runs-on: ubuntu-latest
     container:
-      image: bilelmoussaoui/flatpak-github-actions:freedesktop-23.08
+      image: ghcr.io/andyholmes/flatter/freedesktop:23.08
       options: --privileged
     steps:
-    - uses: actions/checkout@v3
-    - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+    - uses: actions/checkout@v4
+
+    - uses: andyholmes/flatter@main
       with:
-        bundle: rvgl.flatpak
-        manifest-path: org.rvgl.rvmm.yml
+        files: org.rvgl.rvmm.yml
+        upload-bundles: true
+        upload-pages-artifact: true
+
   deploy:
     needs: flatpak
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' }}
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    if: ${{ github.ref == 'refs/heads/repo' }}
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/download-artifact@v3
-      with:
-        name: rvgl-x86_64
-
-    - uses: xresloader/upload-to-github-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        file: rvgl.flatpak
-        tag_name: latest
-        overwrite: true
-        update_latest_release: true
-        draft: false
-    - uses: rickstaa/action-create-tag@v1
-      with:
-        tag: latest
-        force_push_tag: true
+    - name: GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
